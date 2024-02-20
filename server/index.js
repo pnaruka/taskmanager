@@ -43,6 +43,19 @@ app.get('/tasks/:id', async(req,res)=>{
     }
 })
 
+app.put('/tasks/:id', async(req, res)=>{
+    try {
+        const {id} = req.params;
+        const task = req.body;
+        const query = "UPDATE tasklist SET title=$1,description=$2,start_date=$3,due_date=$4,status=$5 where id=$6 RETURNING *";
+        const values = [task.title,task.description,task.start_date,task.due_date,task.status,id];
+        const updated = await pool.query(query,values);
+        res.json(updated.rows);
+    } catch (error) {
+        console.log(error.message);
+    }
+})
+
 
 
 app.listen(5000, ()=>{
