@@ -24,8 +24,8 @@ app.post('/tasks', async(req,res)=>{
 //get all
 app.get('/tasks', async(req,res)=>{
     try {
-        const workers = await pool.query("SELECT * FROM tasklist");
-        res.json(workers.rows);
+        const tasks = await pool.query("SELECT * FROM tasklist");
+        res.json(tasks.rows);
     } catch (error) {
         console.log(error.message);
     }
