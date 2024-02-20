@@ -43,6 +43,7 @@ app.get('/tasks/:id', async(req,res)=>{
     }
 })
 
+//edit task
 app.put('/tasks/:id', async(req, res)=>{
     try {
         const {id} = req.params;
@@ -56,7 +57,15 @@ app.put('/tasks/:id', async(req, res)=>{
     }
 })
 
-
+app.delete('/tasks/:id', async(req, res)=>{
+    try {
+        const {id} = req.params;
+        const deleted = await pool.query("DELETE FROM tasklist where id=$1",[id]);
+        res.json(deleted.rows);
+    } catch (error) {
+        console.log(error.message);
+    }
+})
 
 app.listen(5000, ()=>{
     console.log("server up");
