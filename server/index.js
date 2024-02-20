@@ -31,6 +31,17 @@ app.get('/tasks', async(req,res)=>{
     }
 })
 
+//get task
+app.get('/tasks/:id', async(req,res)=>{
+    try {
+        const { id } = req.params;
+        const task = await pool.query("SELECT * FROM tasklist where id=$1",[id]);
+        res.json(task.rows);
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+})
 
 
 
